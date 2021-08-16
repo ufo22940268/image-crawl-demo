@@ -27,7 +27,9 @@ func main() {
 	if err := chromedp.Run(ctx, fullScreenshot(`https://staging.compass.com/app/ads-center/digital/get-ad-photo?adType=4&originalUrl=https%3A%2F%2Fstaging.compass.com%2Fm%2Fb371e9f8b2771caf77cf5184a497f6f8b41c5bff_img_0%2Forigin.jpg&adFocusChoiceVal=listing&bannerTitle=5225%20Pooks%20Hill%20Road%2C%20Unit%20616N&bannerSubtitle=JUST%20LISTED&bannerSize=Bethesda%20%7C%202%20Bed%2C%201%20Bath&transform=%7B%22scale%22%3A1.143%2C%22translate%22%3A%5B0%2C0%5D%7D&aspect=square`, 90, &buf)); err != nil {
 		log.Fatal(err)
 	}
-	if err := ioutil.WriteFile("fullScreenshot.png", buf, 0o644); err != nil {
+	filename := "fullScreenshot.png"
+	os.Remove(filename)
+	if err := ioutil.WriteFile(filename, buf, 0o644); err != nil {
 		log.Fatal(err)
 	}
 
