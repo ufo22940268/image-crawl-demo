@@ -31,7 +31,7 @@ func main() {
 		log.Fatal(err)
 	}
 
-	log.Printf("wrote elementScreenshot.png and fullScreenshot.png")
+	log.Printf("wrote fullScreenshot.png")
 }
 
 // fullScreenshot takes a screenshot of the entire browser viewport.
