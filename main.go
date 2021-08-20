@@ -4,6 +4,8 @@ package main
 
 import (
 	"context"
+	"flag"
+	"fmt"
 	"github.com/chromedp/cdproto/network"
 	"io/ioutil"
 	"log"
@@ -13,11 +15,18 @@ import (
 )
 
 func main() {
+	fmt.Println("----------------startj---------------------")
 	// create context
-	ctx, cancel := chromedp.NewContext(
-		context.Background(),
-		// chromedp.WithDebugf(log.Printf),
-	)
+	devtoolsWsURL := flag.String("devtools-ws-url", "ws://127.0.0.1:9222", "ws://127.0.0.1:9222")
+	flag.Parse()
+	fmt.Printf("devtools url: %s \n", *devtoolsWsURL)
+	if *devtoolsWsURL == "" {
+		log.Fatal("must specify -devtools-ws-url")
+	}
+
+	// create allocator context for use with creating a browser context later
+	allocatorContext, cancel := chromedp.NewRemoteAllocator(context.Background(), *devtoolsWsURL)
+	ctx, cancel := chromedp.NewContext(allocatorContext)
 	defer cancel()
 
 	// capture screenshot of an element

@@ -1,0 +1,17 @@
+version: "3.7"
+services:
+  chrome:
+    image: chromedp/headless-shell:latest
+    ports:
+      - "9222:9222"
+    networks:
+      - some-net
+  crawl:
+    build: .
+    env_file:
+      - .env
+    networks:
+      - some-net
+networks:
+  some-net:
+    driver: bridge
